@@ -26,7 +26,7 @@ The **Personal Health & Fitness Calculator** is a SOAP-based web service designe
 | Arivarasan A/L Panja Varnam | AI240175 | Leader & SOAP Developer |
 | Marsya Nadirah Islam Binti Mazli | CI240051 | BMI, Body Fat, Calorie Modules |
 | Nurul Liyana Binti Awang | AI240083 | Weight Loss & Heart Rate Modules |
-| Nuratqah Syahirah Binti Mohd Yusaimi | CI240056 | Tester & Documentation |
+| Nuratiqah Syahirah Binti Mohd Yusaimi | CI240056 | Tester & Documentation |
 | Nafisa Rasyiqah Binti Razman | AI240045 | Tester & Documentation |
 
 ## 🚀 Quick Start
