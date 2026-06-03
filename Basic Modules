@@ -1,0 +1,6 @@
+a. Display the user’s information (name, ID, gender, weight, height, age).
+b. Determine age based on ID (IC Number or Birthdate Parsing).
+c. Module:
+  i. Body Mass Index (BMI) Calculation
+  ii. Body Fat Percentage Calculation
+  iii. Calories Burn Rate Calculation
