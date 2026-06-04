@@ -112,8 +112,12 @@ public class PersonalHealthFitnessCalculator {
 
         validateWeight(w);
         validateHeight(h);
-        // Placeholder – real formula: w / ((h/100)^2)
-        return 0.0;
+        
+        // Convert height from centimeters to meters
+        double heightInMeters = h / 100.0;
+        double bmi = w / (heightInMeters * heightInMeters);
+        
+        return Math.round(bmi * 100.0) / 100.0;
     }
 
     @WebMethod(operationName = "calculateBodyFat")
@@ -125,8 +129,11 @@ public class PersonalHealthFitnessCalculator {
         if (bmi <= 0) throw buildFault("Invalid BMI: must be > 0. Received: " + bmi);
         validateAge(age);
         validateGender(gender);
-        // Placeholder – real formula: Deurenberg (1.20*BMI + 0.23*age − 10.8*gender − 5.4)
-        return 0.0;
+        
+        // Deurenberg Formula: (1.20 * BMI) + (0.23 * age) - (10.8 * gender) - 5.4
+        double bodyFat = (1.20 * bmi) + (0.23 * age) - (10.8 * gender) - 5.4;
+        
+        return Math.round(bodyFat * 100.0) / 100.0;
     }
 
     @WebMethod(operationName = "calculateCalories")
@@ -138,8 +145,11 @@ public class PersonalHealthFitnessCalculator {
         if (met <= 0) throw buildFault("Invalid MET: must be > 0. Received: " + met);
         validateWeight(w);
         if (t <= 0) throw buildFault("Invalid duration: must be > 0. Received: " + t);
-        // Placeholder – real formula: MET * w * (t/60)
-        return 0.0;
+        
+        // Standard Burn Rate Formula: MET * 3.5 * weight (kg) / 200 * duration (mins)
+        double caloriesBurned = met * 3.5 * w / 200.0 * t;
+        
+        return Math.round(caloriesBurned * 100.0) / 100.0;
     }
 
     @WebMethod(operationName = "predictWeightLoss")
@@ -149,8 +159,11 @@ public class PersonalHealthFitnessCalculator {
 
         if (deficit <= 0) throw buildFault("Invalid caloric deficit: must be > 0. Received: " + deficit);
         if (days <= 0) throw buildFault("Invalid days: must be > 0. Received: " + days);
-        // Placeholder – real formula: (deficit * days) / 7700
-        return 0.0;
+        
+        // 7700 kcal deficit equates roughly to 1 kg of body fat loss
+        double predictedLossKg = (deficit * days) / 7700.0;
+        
+        return Math.round(predictedLossKg * 100.0) / 100.0;
     }
 
     @WebMethod(operationName = "calculateHeartRate")
@@ -158,7 +171,19 @@ public class PersonalHealthFitnessCalculator {
             @WebParam(name = "age") int age) {
 
         validateAge(age);
-        // Placeholder – real formula: max HR = 220 - age; zones as percentages
-        return "Pending";
+        
+        // Haskell & Fox Formula for Max Heart Rate
+        int maxHR = 220 - age;
+        
+        // Classical Cardiovascular Training Intensity Zones
+        int fatBurnLow = (int) Math.round(maxHR * 0.50);
+        int fatBurnHigh = (int) Math.round(maxHR * 0.70);
+        int cardioLow = (int) Math.round(maxHR * 0.70);
+        int cardioHigh = (int) Math.round(maxHR * 0.85);
+        
+        return String.format(
+            "Max HR: %d bpm | Fat Burn Zone (50%%-70%%): %d-%d bpm | Cardio Zone (70%%-85%%): %d-%d bpm",
+            maxHR, fatBurnLow, fatBurnHigh, cardioLow, cardioHigh
+        );
     }
 }
